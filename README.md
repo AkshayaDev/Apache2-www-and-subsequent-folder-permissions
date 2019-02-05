@@ -1,9 +1,12 @@
 # Apache2-www-and-subsequent-folder-permissions
 
-sudo adduser $USER www-data  
-sudo chown root:root /var/www  
-sudo chown -R $USER:www-data /var/www/*  
-sudo chmod -R 755 /var/www  
+// Adding current user to www-data
+sudo adduser $USER www-data
 
-sudo a2enmod rewrite  
-sudo chown -R www-data /var/www  
+//change ownership to user:www-data and 
+sudo chown $USER:www-data -R /var/www/html
+sudo chmod u=rwX,g=srX,o=rX -R /var/www/html
+
+// change file permissions of existing files and folders to 755/644
+sudo find /var/www/html -type d -exec chmod g=rwxs "{}" \;
+sudo find /var/www/html -type f -exec chmod g=rws "{}" \;
